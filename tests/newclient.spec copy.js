@@ -1,24 +1,24 @@
 const { test, expect } = require("@playwright/test");
+const { LoginPage } = require("../pageobjects/LoginPage");
+const { DashboardPage } = require("../pageobjects/DashboardPage");
+const { POManager } = require("../pageobjects/POManager");
 
 test("Client App Login", async ({ page }) => {
   const productName = "ZARA COAT 3";
   const products = page.locator(".card-body");
-  await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
+
+  const poManager = new POManager(page);
+  // Login to the application
+  const loginPage = poManager.getLoginPage();
   console.log(await page.title());
-  await page.locator("input#userEmail").fill("ankarki9@gmail.com");
-  await page.locator("input#userPassword").fill("J0hn@123!");
-  await page.locator("#login").click();
-  await page.waitForLoadState("networkidle");
-  const count = await products.count();
+  await loginPage.goTo();
+  await loginPage.ValidLogin("ankarki9@gmail.com", "J0hn@123!");
 
-  for (let i = 0; i < count; ++i) {
-    if ((await products.nth(i).locator("b").textContent()) === productName) {
-      await products.nth(i).locator("text=Add To Cart").click();
-      break;
-    }
-  }
+  // Search for the product and add it to the cart
+  const dashboardPage = poManager.getDashboardPage();
+  await dashboardPage.searchProductAddCart(productName);
+  await dashboardPage.navigateToCart();
 
-  await page.locator("[routerlink*='cart']").click();
   await page.locator("div li").first().waitFor();
   await expect(page.locator("h3:has-text('ZARA COAT 3')")).toBeVisible();
 

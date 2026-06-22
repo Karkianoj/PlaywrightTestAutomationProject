@@ -1,8 +1,25 @@
-
-# Playwright
+# Dependencies
 node_modules/
+
+# Playwright output
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# MCP / debug artifacts
+/.playwright-mcp/
+
+# Generated test artifacts
+/screenshot.png
+/state.json
+
+# Environment files (never commit credentials)
+.env
+.env.*
+!.env.example
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
