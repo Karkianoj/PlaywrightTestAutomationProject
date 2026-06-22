@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "bddgen": "bddgen",
+    "bdd": "bddgen && playwright test --project=bdd",
+    "cucumber:example": "cucumber-js --config examples/classic-cucumber/cucumber.js"
+  },
   "keywords": [],
   "author": "Anoj Karki",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@cucumber/cucumber": "^13.0.0",
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.2"
+    "@types/node": "^25.9.2",
+    "playwright-bdd": "^9.2.0"
   }
 }

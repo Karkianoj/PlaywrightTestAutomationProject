@@ -1,5 +1,15 @@
 // @ts-check
 import { defineConfig, devices } from "@playwright/test";
+import { defineBddConfig } from "playwright-bdd";
+
+/**
+ * Generate Playwright tests from the Cucumber/Gherkin feature files.
+ * Run `npx bddgen` (or `npm run bdd`) to (re)generate before running tests.
+ */
+const bddTestDir = defineBddConfig({
+  features: "features/**/*.feature",
+  steps: ["features/fixtures.js", "features/steps/**/*.js"],
+});
 
 /**
  * Read environment variables from file.
@@ -35,6 +45,13 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      /* Cucumber/BDD scenarios generated from features/*.feature */
+      name: "bdd",
+      testDir: bddTestDir,
+      use: { ...devices["Desktop Chrome"] },
+    },
+
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },

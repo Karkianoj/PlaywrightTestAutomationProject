@@ -1,6 +1,12 @@
 # Dependencies
 node_modules/
 
+# playwright-bdd generated tests
+/.features-gen/
+
+# Classic Cucumber example HTML report
+/examples/classic-cucumber/cucumber-report.html
+
 # Playwright output
 /test-results/
 /playwright-report/
